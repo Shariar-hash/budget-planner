@@ -1,6 +1,7 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken');
 
+// Transactions API endpoint - handles CRUD operations for user transactions
 module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
