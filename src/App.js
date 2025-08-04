@@ -1004,16 +1004,13 @@ const BudgetPlanner = () => {
           
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(350px, 100%), 1fr))', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', 
             gap: 'clamp(15px, 3vw, 20px)' 
           }}>
             {categories.expense.map((category, index) => (
               <div 
                 key={category} 
                 style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '12px',
                   padding: '16px',
                   backgroundColor: 'var(--secondary-bg)',
                   borderRadius: '8px',
@@ -1030,73 +1027,74 @@ const BudgetPlanner = () => {
                   e.target.style.transform = 'translateY(0)';
                 }}
               >
-                <div style={{
-                  width: '12px',
-                  height: '12px',
-                  borderRadius: '50%',
-                  backgroundColor: categoryColors[category] || '#666',
-                  flexShrink: 0
-                }} />
-                
+                {/* Top row with category name and input */}
                 <div style={{ 
-                  minWidth: '80px', 
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  color: 'var(--text-color)'
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '12px',
+                  marginBottom: '8px'
                 }}>
-                  {category}
-                </div>
-                
-                <div style={{ position: 'relative', flex: 1, maxWidth: '150px' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: '12px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    fontSize: 'clamp(14px, 3vw, 16px)',
-                    color: 'var(--secondary-text)',
-                    pointerEvents: 'none'
-                  }}>৳</span>
-                  <input
-                    type="number"
-                    placeholder="Set limit"
-                    value={tempBudgets[category] || ''}
-                    onChange={(e) => setTempBudgetLimit(category, e.target.value)}
-                    style={{ 
-                      ...styles.input, 
-                      margin: 0,
-                      paddingLeft: 'clamp(26px, 4vw, 30px)',
+                  <div style={{
+                    width: '12px',
+                    height: '12px',
+                    borderRadius: '50%',
+                    backgroundColor: categoryColors[category] || '#666',
+                    flexShrink: 0
+                  }} />
+                  
+                  <div style={{ 
+                    minWidth: '80px', 
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    color: 'var(--text-color)'
+                  }}>
+                    {category}
+                  </div>
+                  
+                  <div style={{ position: 'relative', flex: 1, maxWidth: '150px' }}>
+                    <span style={{
+                      position: 'absolute',
+                      left: '12px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
                       fontSize: 'clamp(14px, 3vw, 16px)',
-                      height: 'clamp(48px, 6vw, 56px)',
-                      width: '100%',
-                      minWidth: 'clamp(140px, 20vw, 180px)'
-                    }}
-                  />
+                      color: 'var(--secondary-text)',
+                      pointerEvents: 'none'
+                    }}>৳</span>
+                    <input
+                      type="number"
+                      placeholder="Set limit"
+                      value={tempBudgets[category] || ''}
+                      onChange={(e) => setTempBudgetLimit(category, e.target.value)}
+                      style={{ 
+                        ...styles.input, 
+                        margin: 0,
+                        paddingLeft: 'clamp(26px, 4vw, 30px)',
+                        fontSize: 'clamp(14px, 3vw, 16px)',
+                        height: 'clamp(48px, 6vw, 56px)',
+                        width: '100%',
+                        minWidth: 'clamp(140px, 20vw, 180px)'
+                      }}
+                    />
+                  </div>
                 </div>
                 
+                {/* Bottom row with spent and limit info */}
                 <div style={{ 
-                  minWidth: '140px', 
+                  display: 'flex', 
+                  justifyContent: 'space-between',
                   fontSize: '12px',
-                  textAlign: 'right',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center'
+                  paddingLeft: '24px' // Align with the category text
                 }}>
                   <div style={{ 
                     color: expensesByCategory[category] > budgets[category] ? '#ef4444' : 'var(--secondary-text)',
-                    fontWeight: '500',
-                    whiteSpace: 'nowrap',
-                    overflow: 'visible'
+                    fontWeight: '500'
                   }}>
                     Spent: ৳{(expensesByCategory[category] || 0).toFixed(2)}
                   </div>
                   {budgets[category] && (
                     <div style={{ 
-                      fontSize: '11px', 
-                      color: 'var(--secondary-text)',
-                      marginTop: '2px',
-                      whiteSpace: 'nowrap',
-                      overflow: 'visible'
+                      color: 'var(--secondary-text)'
                     }}>
                       Limit: ৳{budgets[category].toFixed(2)}
                     </div>

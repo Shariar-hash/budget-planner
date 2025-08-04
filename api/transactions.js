@@ -97,15 +97,13 @@ module.exports = async function handler(req, res) {
       });
 
     } else if (req.method === 'DELETE') {
-      // Delete transaction by ID from URL path
-      const url = new URL(req.url, `http://${req.headers.host}`);
-      const pathParts = url.pathname.split('/');
-      const transactionId = pathParts[pathParts.length - 1];
+      // Delete transaction by ID from request body or query params
+      const transactionId = req.body?.id || req.query?.id;
 
-      console.log('Delete request - URL:', req.url, 'Parsed ID:', transactionId);
+      console.log('Delete request - Body:', req.body, 'Query:', req.query, 'ID:', transactionId);
 
-      if (!transactionId || transactionId === 'transactions') {
-        return res.status(400).json({ error: 'Transaction ID is required' });
+      if (!transactionId) {
+        return res.status(400).json({ error: 'Transaction ID is required in request body or query' });
       }
 
       try {
@@ -117,7 +115,7 @@ module.exports = async function handler(req, res) {
         console.log('Delete result:', result);
 
         if (result.deletedCount === 0) {
-          return res.status(404).json({ error: 'Transaction not found' });
+          return res.status(404).json({ error: 'Transaction not found or not authorized' });
         }
 
         res.status(200).json({ message: 'Transaction deleted successfully' });

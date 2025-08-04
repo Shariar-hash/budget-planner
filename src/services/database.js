@@ -132,7 +132,9 @@ class DatabaseService {
 
   async deleteTransaction(transactionId) {
     try {
-      await this.api.delete(`/transactions/${transactionId}`);
+      await this.api.delete('/transactions', {
+        data: { id: transactionId }
+      });
       return true;
     } catch (error) {
       throw new Error('Failed to delete transaction. Please try again.');
