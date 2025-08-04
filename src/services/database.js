@@ -39,7 +39,7 @@ class DatabaseService {
   // Authentication methods
   async register(userData) {
     try {
-      const response = await this.api.post('/auth/register', userData);
+      const response = await this.api.post('/register', userData);
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token);
         localStorage.setItem('currentUser', JSON.stringify(response.data.user));
@@ -52,7 +52,7 @@ class DatabaseService {
 
   async login(credentials) {
     try {
-      const response = await this.api.post('/auth/login', credentials);
+      const response = await this.api.post('/login', credentials);
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token);
         localStorage.setItem('currentUser', JSON.stringify(response.data.user));
