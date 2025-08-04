@@ -37,8 +37,17 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
+    // Try connecting with explicit options for Vercel/Atlas
+    const connectionOptions = {
+      ssl: true,
+      tlsAllowInvalidCertificates: true,
+      tlsAllowInvalidHostnames: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    };
+
     // Connect to MongoDB
-    client = new MongoClient(MONGODB_URI);
+    client = new MongoClient(MONGODB_URI, connectionOptions);
     await client.connect();
     const db = client.db();
 
