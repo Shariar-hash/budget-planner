@@ -46,7 +46,18 @@ class DatabaseService {
       }
       return response.data;
     } catch (error) {
-      throw new Error(error.response?.data?.error || 'Registration failed. Please check your connection and try again.');
+      console.error('Registration error:', error);
+      
+      // Better error handling
+      if (error.response && error.response.data && error.response.data.error) {
+        throw new Error(error.response.data.error);
+      } else if (error.response && error.response.data) {
+        throw new Error(JSON.stringify(error.response.data));
+      } else if (error.message) {
+        throw new Error(error.message);
+      } else {
+        throw new Error('Registration failed. Please check your connection and try again.');
+      }
     }
   }
 

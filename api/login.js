@@ -13,10 +13,26 @@ async function connectToDatabase() {
     return cachedDb;
   }
 
-  const client = await MongoClient.connect(MONGODB_URI);
-  const db = client.db();
-  cachedDb = db;
-  return db;
+  try {
+    console.log('Connecting to MongoDB...');
+    const client = await MongoClient.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      maxPoolSize: 1, // Limit pool size for serverless
+      serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
+      ssl: true,
+      sslValidate: false, // This can help with SSL issues on Vercel
+    });
+    console.log('MongoDB connection successful');
+    const db = client.db();
+    cachedDb = db;
+    return db;
+  } catch (error) {
+    console.error('MongoDB connection failed:', error);
+    throw new Error('Database connection failed: ' + error.message);
+  }
 }
 
 export default async function handler(req, res) {
