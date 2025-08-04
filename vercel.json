@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "name": "budget-planner",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "https://budget-planner-app.vercel.app/api"
+  },
+  "functions": {
+    "server.js": {
+      "maxDuration": 30
+    }
+  }
+}
