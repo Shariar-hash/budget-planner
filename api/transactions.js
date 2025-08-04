@@ -102,6 +102,8 @@ module.exports = async function handler(req, res) {
       const pathParts = url.pathname.split('/');
       const transactionId = pathParts[pathParts.length - 1];
 
+      console.log('Delete request - URL:', req.url, 'Parsed ID:', transactionId);
+
       if (!transactionId || transactionId === 'transactions') {
         return res.status(400).json({ error: 'Transaction ID is required' });
       }
@@ -112,12 +114,15 @@ module.exports = async function handler(req, res) {
           userId: new ObjectId(userId)
         });
 
+        console.log('Delete result:', result);
+
         if (result.deletedCount === 0) {
           return res.status(404).json({ error: 'Transaction not found' });
         }
 
         res.status(200).json({ message: 'Transaction deleted successfully' });
       } catch (error) {
+        console.error('Delete error:', error);
         if (error.name === 'BSONError') {
           return res.status(400).json({ error: 'Invalid transaction ID format' });
         }

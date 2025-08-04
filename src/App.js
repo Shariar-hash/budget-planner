@@ -104,9 +104,12 @@ const BudgetPlanner = () => {
     Gift: '#0abde3'
   };
 
-  // Initialize app and check authentication on mount
+  // Load data from localStorage and check authentication on mount
   useEffect(() => {
     const initializeApp = async () => {
+      const savedDarkMode = localStorage.getItem('darkMode');
+      if (savedDarkMode) setDarkMode(JSON.parse(savedDarkMode));
+
       // Check if user is authenticated
       if (dbService.isAuthenticated()) {
         const user = dbService.getCurrentUser();
@@ -1001,7 +1004,7 @@ const BudgetPlanner = () => {
           
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(350px, 100%), 1fr))', 
             gap: 'clamp(15px, 3vw, 20px)' 
           }}>
             {categories.expense.map((category, index) => (
@@ -1072,13 +1075,18 @@ const BudgetPlanner = () => {
                 </div>
                 
                 <div style={{ 
-                  minWidth: '120px', 
+                  minWidth: '140px', 
                   fontSize: '12px',
-                  textAlign: 'right'
+                  textAlign: 'right',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center'
                 }}>
                   <div style={{ 
                     color: expensesByCategory[category] > budgets[category] ? '#ef4444' : 'var(--secondary-text)',
-                    fontWeight: '500'
+                    fontWeight: '500',
+                    whiteSpace: 'nowrap',
+                    overflow: 'visible'
                   }}>
                     Spent: ৳{(expensesByCategory[category] || 0).toFixed(2)}
                   </div>
@@ -1086,9 +1094,11 @@ const BudgetPlanner = () => {
                     <div style={{ 
                       fontSize: '11px', 
                       color: 'var(--secondary-text)',
-                      marginTop: '2px'
+                      marginTop: '2px',
+                      whiteSpace: 'nowrap',
+                      overflow: 'visible'
                     }}>
-                      Budget: ৳{budgets[category].toFixed(2)}
+                      Limit: ৳{budgets[category].toFixed(2)}
                     </div>
                   )}
                 </div>
