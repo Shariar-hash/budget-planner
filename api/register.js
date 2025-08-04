@@ -13,10 +13,20 @@ async function connectToDatabase() {
     return cachedDb;
   }
 
-  const client = await MongoClient.connect(MONGODB_URI);
-  const db = client.db();
-  cachedDb = db;
-  return db;
+  try {
+    console.log('Connecting to MongoDB...');
+    const client = await MongoClient.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB connection successful');
+    const db = client.db();
+    cachedDb = db;
+    return db;
+  } catch (error) {
+    console.error('MongoDB connection failed:', error);
+    throw new Error('Database connection failed: ' + error.message);
+  }
 }
 
 export default async function handler(req, res) {
@@ -35,8 +45,22 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Check if MongoDB URI is available
+    if (!MONGODB_URI) {
+      console.error('MONGODB_URI environment variable is not set');
+      return res.status(500).json({ error: 'Database configuration error' });
+    }
+
+    // Check if JWT_SECRET is available
+    if (!JWT_SECRET) {
+      console.error('JWT_SECRET environment variable is not set');
+      return res.status(500).json({ error: 'Authentication configuration error' });
+    }
+
     const database = await connectToDatabase();
     const { username, password, email } = req.body;
+
+    console.log('Registration attempt:', { username, email, hasPassword: !!password });
 
     if (!username || !password || !email) {
       return res.status(400).json({ error: 'All fields are required' });
@@ -88,6 +112,14 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    
+    // Return a proper error response
+    if (error.code === 11000) {
+      return res.status(400).json({ error: 'User with this email or username already exists' });
+    }
+    
+    return res.status(500).json({ 
+      error: error.message || 'Internal server error during registration' 
+    });
   }
 }
