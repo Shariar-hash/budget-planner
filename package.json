@@ -16,10 +16,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/budget-planner.git"
+    "url": "https://github.com/Shariar-hash/budget-planner.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/budget-planner/issues"
+    "url": "https://github.com/Shariar-hash/budget-planner/issues"
   },
   "private": true,
   "dependencies": {
