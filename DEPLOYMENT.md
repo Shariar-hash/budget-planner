@@ -12,6 +12,7 @@
 - [x] Updated package.json metadata
 - [x] ✨ **GitHub Repository Created:** https://github.com/Shariar-hash/budget-planner.git
 - [x] ✨ **Code Successfully Pushed to GitHub!**
+- [x] 🔒 **SECURITY FIX:** Updated .env.example and DEPLOYMENT.md to use safe placeholder format
 
 ## 🔐 Environment Variables Setup
 
@@ -24,10 +25,12 @@
 Add these environment variables in your Vercel dashboard:
 
 ```env
-REACT_APP_MONGODB_URI=mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/budget-planner?retryWrites=true&w=majority&appName=YourApp
-JWT_SECRET=YOUR_SUPER_STRONG_JWT_SECRET_HERE
+REACT_APP_MONGODB_URI=mongodb+srv://USERNAME:PASSWORD@CLUSTER.mongodb.net/budget-planner?retryWrites=true&w=majority&appName=YourAppName
+JWT_SECRET=GENERATE_A_STRONG_RANDOM_SECRET_AT_LEAST_32_CHARACTERS_LONG
 REACT_APP_API_URL=https://your-vercel-app-name.vercel.app/api
 ```
+
+**🔒 SECURITY NOTE:** Replace all UPPERCASE placeholders with your actual credentials in Vercel dashboard only!
 
 ## 📋 Deployment Steps
 
