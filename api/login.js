@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const MONGODB_URI = process.env.REACT_APP_MONGODB_URI;
+  const MONGODB_URI = process.env.MONGODB_URI || process.env.REACT_APP_MONGODB_URI;
   const JWT_SECRET = process.env.JWT_SECRET;
 
   if (!MONGODB_URI) {
@@ -43,8 +43,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email or username is required' });
     }
 
-    // Connect to MongoDB
-    client = new MongoClient(MONGODB_URI);
+    // Connect to MongoDB with minimal options
+    client = new MongoClient(MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+    });
     await client.connect();
     const db = client.db();
 
