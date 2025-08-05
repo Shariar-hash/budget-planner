@@ -924,11 +924,14 @@ const BudgetPlanner = () => {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percent }) => window.innerWidth > 768 ? `${name} ${(percent * 100).toFixed(0)}%` : `${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) => {
+                    const percentage = (percent * 100).toFixed(0);
+                    return `${name}\n${percentage}%`;
+                  }}
                   outerRadius={window.innerWidth > 768 ? 80 : 60}
                   fill="#8884d8"
                   dataKey="value"
-                  fontSize={window.innerWidth > 768 ? 12 : 10}
+                  fontSize={window.innerWidth > 768 ? 10 : 8}
                 >
                   {pieData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -941,7 +944,7 @@ const BudgetPlanner = () => {
                     borderRadius: '8px',
                     fontSize: 'clamp(12px, 2.5vw, 14px)'
                   }}
-                  formatter={(value) => [`৳${value}`, '']}
+                  formatter={(value, name) => [`৳${value.toFixed(2)}`, name]}
                 />
               </PieChart>
             </ResponsiveContainer>
