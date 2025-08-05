@@ -1,7 +1,14 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /google*.html
+
+# Important pages
+Allow: /login
+Allow: /register  
+Allow: /dashboard
+Allow: /transactions
+Allow: /budget
 
 # Sitemap location
 Sitemap: https://budget-planner-ochre.vercel.app/sitemap.xml
