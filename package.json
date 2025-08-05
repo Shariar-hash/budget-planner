@@ -2,7 +2,7 @@
   "name": "budget-planner",
   "version": "1.0.0",
   "description": "A modern, responsive budget planner application built with React and MongoDB",
-  "homepage": "https://budget-planner-app.vercel.app",
+  "homepage": "https://budget-planner-ochre.vercel.app",
   "author": "Your Name",
   "license": "MIT",
   "keywords": [

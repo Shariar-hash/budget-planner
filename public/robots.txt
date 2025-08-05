@@ -4,4 +4,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://budget-planner-app.vercel.app/sitemap.xml
+Sitemap: https://budget-planner-ochre.vercel.app/sitemap.xml
