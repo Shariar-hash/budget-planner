@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "public/sitemap.xml": {
+      "includeFiles": "public/sitemap.xml"
+    }
+  },
   "rewrites": [
     {
       "source": "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|google*.html).*)",
@@ -15,7 +20,11 @@
         },
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600"
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
         }
       ]
     },
