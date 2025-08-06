@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "public/sitemap.xml": {
-      "includeFiles": "public/sitemap.xml"
-    }
-  },
   "rewrites": [
     {
       "source": "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|google*.html).*)",
