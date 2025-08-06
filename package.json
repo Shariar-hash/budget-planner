@@ -1,18 +1,21 @@
 {
-  "name": "budget-planner",
+  "name": "alriar-budget-buddy",
   "version": "1.0.0",
-  "description": "A modern, responsive budget planner application built with React and MongoDB",
+  "description": "Alriar Budget Buddy - Your Personal Financial Management Companion built with React and MongoDB",
   "homepage": "https://budget-planner-ochre.vercel.app",
-  "author": "Your Name",
+  "author": "Alriar",
   "license": "MIT",
   "keywords": [
+    "alriar",
     "budget",
-    "planner", 
+    "buddy", 
     "finance",
     "expense-tracker",
+    "personal-finance",
     "react",
     "mongodb",
-    "vercel"
+    "vercel",
+    "alriar-budget-buddy"
   ],
   "repository": {
     "type": "git",

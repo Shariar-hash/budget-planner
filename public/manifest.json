@@ -1,7 +1,7 @@
 {
-  "short_name": "Budget Planner",
-  "name": "Budget Planner - Professional Financial Management",
-  "description": "Track your income, expenses, and manage your budget with our modern, responsive budgeting application.",
+  "short_name": "Alriar Budget Buddy",
+  "name": "Alriar Budget Buddy - Your Personal Financial Management Companion",
+  "description": "Track your income, expenses, and manage your budget with Alriar Budget Buddy. Modern, responsive budgeting application with charts and analytics.",
   "icons": [
     {
       "src": "favicon.ico",

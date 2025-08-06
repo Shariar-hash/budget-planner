@@ -3,6 +3,7 @@ Allow: /
 Disallow: /api/
 Disallow: /google*.html
 
+# Alriar Budget Buddy - Personal Financial Management
 # Important pages
 Allow: /login
 Allow: /register  

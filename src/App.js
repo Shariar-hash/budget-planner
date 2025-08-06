@@ -486,7 +486,7 @@ const BudgetPlanner = () => {
             }}>
               {authMode === 'login' 
                 ? '👋 First time? Click "Sign up" below to create an account!'
-                : '🎉 Fill in your details to create your budget planner account'
+                : '🎉 Fill in your details to create your Alriar Budget Buddy account'
               }
             </p>
             
@@ -611,7 +611,7 @@ const BudgetPlanner = () => {
             WebkitTextFillColor: 'transparent',
             minWidth: 'fit-content'
           }}>
-            💰 Budget Planner
+            🌟 Alriar Budget Buddy
           </h1>
           <div style={{ display: 'flex', gap: 'clamp(8px, 2vw, 12px)', alignItems: 'center', flexWrap: 'wrap' }}>
             {currentUser && (
