@@ -1245,6 +1245,95 @@ const BudgetPlanner = () => {
         </div>
       )}
 
+      {/* Footer */}
+      <footer style={{
+        marginTop: '60px',
+        padding: 'clamp(20px, 4vw, 30px)',
+        borderTop: '1px solid var(--border-color)',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        textAlign: 'center',
+        animation: 'slideUp 0.8s ease'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '15px',
+          alignItems: 'center'
+        }}>
+          {/* Brand and tagline */}
+          <div style={{ marginBottom: '10px' }}>
+            <h3 style={{
+              margin: '0 0 8px 0',
+              fontSize: 'clamp(16px, 3vw, 20px)',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontWeight: 'bold'
+            }}>
+              🌟 Alriar Budget Buddy
+            </h3>
+            <p style={{
+              margin: 0,
+              fontSize: 'clamp(12px, 2.5vw, 14px)',
+              color: 'var(--secondary-text)',
+              fontStyle: 'italic'
+            }}>
+              Your Personal Financial Management Companion
+            </p>
+          </div>
+
+          {/* Features */}
+          <div style={{
+            display: 'flex',
+            gap: 'clamp(15px, 3vw, 25px)',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            fontSize: 'clamp(11px, 2vw, 13px)',
+            color: 'var(--secondary-text)'
+          }}>
+            <span>💰 Expense Tracking</span>
+            <span>📊 Budget Management</span>
+            <span>📈 Financial Analytics</span>
+            <span>🔒 Secure & Private</span>
+          </div>
+
+          {/* Copyright and links */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            alignItems: 'center',
+            fontSize: 'clamp(10px, 2vw, 12px)',
+            color: 'var(--secondary-text)'
+          }}>
+            <div style={{
+              display: 'flex',
+              gap: '15px',
+              flexWrap: 'wrap',
+              justifyContent: 'center'
+            }}>
+              <span>Built with ❤️ by Alriar</span>
+              <span>|</span>
+              <span>© {new Date().getFullYear()} Alriar Budget Buddy</span>
+            </div>
+            
+            <div style={{
+              display: 'flex',
+              gap: '12px',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              marginTop: '5px'
+            }}>
+              <span style={{ opacity: '0.7' }}>Made with React & MongoDB</span>
+              <span style={{ opacity: '0.5' }}>|</span>
+              <span style={{ opacity: '0.7' }}>v1.0.0</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+
       <style jsx>{`
         @keyframes slideDown {
           from {
