@@ -1314,7 +1314,7 @@ const BudgetPlanner = () => {
               flexWrap: 'wrap',
               justifyContent: 'center'
             }}>
-              <span>Built with ❤️ by Alriar</span>
+              <span>Made by montasimajumdar123@gmail.com</span>
               <span>|</span>
               <span>© {new Date().getFullYear()} Alriar Budget Buddy</span>
             </div>
