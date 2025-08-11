@@ -167,8 +167,8 @@ Built with ❤️ using React and MongoDB
 
 
 
-**created by**
-
-Name:Montasir Majumder Shariar
-
-Portfolio:  https://montasir-majumder-shariar-portfolio.vercel.app/
+## About the Developer
+Created by **Montasir Majumder Shariar**
+- Portfolio: https://montasir-majumder-shariar-portfolio.vercel.app/
+- GitHub: https://github.com/Shariar-hash
+- Live Demo: https://budget-planner-ochre.vercel.app/
