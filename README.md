@@ -164,3 +164,11 @@ Current Version: 1.0.0
 Built with ❤️ using React and MongoDB
 
 **⚠️ Remember: Keep your credentials safe and never commit sensitive data!**
+
+
+
+## About the Developer
+Created by **Montasir Majumder Shariar**
+- Portfolio: https://montasir-majumder-shariar-portfolio.vercel.app/
+- GitHub: https://github.com/Shariar-hash
+- Live Demo: https://budget-planner-ochre.vercel.app/
