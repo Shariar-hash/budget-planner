@@ -161,10 +161,10 @@ const BudgetPlanner = () => {
 
       setTransactions(transactionsData);
       
-      if (budgetsData && budgetsData.budgets) {
-        setBudgets(budgetsData.budgets);
-        setTempBudgets(budgetsData.budgets);
-      }
+      // Handle budget data - if no budgets exist, use empty object
+      const budgetLimits = (budgetsData && typeof budgetsData === 'object') ? budgetsData : {};
+      setBudgets(budgetLimits);
+      setTempBudgets(budgetLimits);
     } catch (error) {
       console.error('Error loading user data:', error);
       // Fallback to local storage if API fails
@@ -387,6 +387,7 @@ const BudgetPlanner = () => {
       try {
         await dbService.saveBudgets(validBudgets);
         setBudgets(validBudgets);
+        setTempBudgets(validBudgets); // Update temp budgets to match saved budgets
         showNotification('Budget limits saved successfully! 📊', 'success');
       } catch (error) {
         showNotification('Error saving budgets: ' + error.message, 'error');
@@ -398,7 +399,8 @@ const BudgetPlanner = () => {
   };
 
   const resetBudgets = () => {
-    setTempBudgets({ ...budgets });
+    setTempBudgets({});
+    showNotification('Budget limits reset! 🔄', 'info');
   };
 
   // Calculations
