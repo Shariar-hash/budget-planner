@@ -84,6 +84,10 @@ const BudgetPlanner = () => {
     confirmPassword: '',
     name: ''
   });
+  
+  // Notification system state
+  const [notifications, setNotifications] = useState([]);
+  const [notificationId, setNotificationId] = useState(0);
   const [newTransaction, setNewTransaction] = useState({
     type: 'expense',
     amount: '',
@@ -102,6 +106,30 @@ const BudgetPlanner = () => {
     Healthcare: '#feca57', Shopping: '#ff9ff3', Bills: '#54a0ff', Other: '#5f27cd',
     Salary: '#00d2d3', Freelance: '#ff9f43', Investment: '#10ac84', Business: '#ee5a24',
     Gift: '#0abde3'
+  };
+
+  // Notification functions
+  const showNotification = (message, type = 'info', duration = 4000) => {
+    const id = notificationId + 1;
+    setNotificationId(id);
+    
+    const notification = {
+      id,
+      message,
+      type, // 'success', 'error', 'warning', 'info'
+      timestamp: Date.now()
+    };
+    
+    setNotifications(prev => [...prev, notification]);
+    
+    // Auto remove after duration
+    setTimeout(() => {
+      removeNotification(id);
+    }, duration);
+  };
+
+  const removeNotification = (id) => {
+    setNotifications(prev => prev.filter(notif => notif.id !== id));
   };
 
   // Load data from localStorage and check authentication on mount
@@ -198,22 +226,22 @@ const BudgetPlanner = () => {
     const { email, password, confirmPassword, name } = authForm;
     
     if (!email || !password) {
-      alert('Please fill in all required fields');
+      showNotification('Please fill in all required fields', 'warning');
       return;
     }
     
     try {
       if (authMode === 'signup') {
         if (!name) {
-          alert('Please enter your name');
+          showNotification('Please enter your name', 'warning');
           return;
         }
         if (password !== confirmPassword) {
-          alert('Passwords do not match');
+          showNotification('Passwords do not match', 'error');
           return;
         }
         if (password.length < 6) {
-          alert('Password must be at least 6 characters long');
+          showNotification('Password must be at least 6 characters long', 'warning');
           return;
         }
         
@@ -225,7 +253,7 @@ const BudgetPlanner = () => {
         
         setCurrentUser(result.user);
         setShowAuth(false);
-        alert('Account created successfully!');
+        showNotification('Account created successfully! 🎉', 'success');
         
       } else {
         // Login
@@ -237,7 +265,7 @@ const BudgetPlanner = () => {
         setCurrentUser(result.user);
         setShowAuth(false);
         await loadUserData();
-        alert('Logged in successfully!');
+        showNotification('Logged in successfully! 👋', 'success');
       }
       
       // Reset form
@@ -250,9 +278,9 @@ const BudgetPlanner = () => {
       
     } catch (error) {
       if (authMode === 'login') {
-        alert(`Login failed: ${error.message}\n\nTip: You can use either your username or email to login. If this is your first time, please create an account using the "Sign Up" option.`);
+        showNotification(`Login failed: ${error.message}. Tip: You can use either your username or email to login. If this is your first time, please create an account using the "Sign Up" option.`, 'error', 6000);
       } else {
-        alert(`Registration failed: ${error.message}`);
+        showNotification(`Registration failed: ${error.message}`, 'error');
       }
       console.error('Auth error:', error);
     }
@@ -269,12 +297,12 @@ const BudgetPlanner = () => {
 
   const addTransaction = async () => {
     if (!newTransaction.amount || !newTransaction.description) {
-      alert('Please fill in amount and description');
+      showNotification('Please fill in amount and description', 'warning');
       return;
     }
     
     if (parseFloat(newTransaction.amount) <= 0) {
-      alert('Amount must be greater than 0');
+      showNotification('Amount must be greater than 0', 'warning');
       return;
     }
 
@@ -299,8 +327,9 @@ const BudgetPlanner = () => {
       });
       setShowAddForm(false);
       
+      showNotification('Transaction added successfully! 💰', 'success');
     } catch (error) {
-      alert('Error adding transaction: ' + error.message);
+      showNotification('Error adding transaction: ' + error.message, 'error');
       console.error('Add transaction error:', error);
     }
   };
@@ -321,8 +350,9 @@ const BudgetPlanner = () => {
     try {
       await dbService.deleteTransaction(id);
       setTransactions(transactions.filter(t => t._id !== id));
+      showNotification('Transaction deleted successfully! 🗑️', 'success');
     } catch (error) {
-      alert('Error deleting transaction: ' + error.message);
+      showNotification('Error deleting transaction: ' + error.message, 'error');
       console.error('Delete transaction error:', error);
     }
   };
@@ -357,13 +387,13 @@ const BudgetPlanner = () => {
       try {
         await dbService.saveBudgets(validBudgets);
         setBudgets(validBudgets);
-        alert('Budget limits saved successfully!');
+        showNotification('Budget limits saved successfully! 📊', 'success');
       } catch (error) {
-        alert('Error saving budgets: ' + error.message);
+        showNotification('Error saving budgets: ' + error.message, 'error');
         console.error('Save budgets error:', error);
       }
     } else {
-      alert('No changes to save.');
+      showNotification('No changes to save.', 'info');
     }
   };
 
@@ -449,6 +479,63 @@ const BudgetPlanner = () => {
 
   return (
     <div style={{ ...styles.container, backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
+      {/* Toast Notifications */}
+      <div style={{
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        zIndex: 10000,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+        maxWidth: 'clamp(300px, 50vw, 400px)',
+        pointerEvents: 'none'
+      }}>
+        {notifications.map(notification => (
+          <div
+            key={notification.id}
+            style={{
+              backgroundColor: notification.type === 'success' ? '#10b981' :
+                             notification.type === 'error' ? '#ef4444' :
+                             notification.type === 'warning' ? '#f59e0b' : '#3b82f6',
+              color: 'white',
+              padding: '16px 20px',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+              fontSize: '14px',
+              fontWeight: '500',
+              lineHeight: '1.5',
+              maxWidth: '100%',
+              wordBreak: 'break-word',
+              position: 'relative',
+              pointerEvents: 'auto',
+              cursor: 'pointer',
+              transform: 'translateX(0)',
+              animation: `slideInRight 0.3s ease-out, fadeOut 0.3s ease-in ${notification.type === 'error' ? '5.7s' : '3.7s'} forwards`,
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '12px'
+            }}
+            onClick={() => removeNotification(notification.id)}
+          >
+            <div style={{ fontSize: '18px', flexShrink: 0, marginTop: '1px' }}>
+              {notification.type === 'success' ? '✅' :
+               notification.type === 'error' ? '❌' :
+               notification.type === 'warning' ? '⚠️' : 'ℹ️'}
+            </div>
+            <div style={{ flex: 1 }}>{notification.message}</div>
+            <div style={{ 
+              fontSize: '16px', 
+              opacity: 0.8, 
+              flexShrink: 0,
+              marginTop: '1px',
+              cursor: 'pointer',
+              padding: '2px'
+            }}>×</div>
+          </div>
+        ))}
+      </div>
+
       {/* Authentication Modal */}
       {showAuth && (
         <div style={{
@@ -1410,6 +1497,17 @@ const BudgetPlanner = () => {
           }
           50% {
             opacity: 0.8;
+          }
+        }
+        
+        @keyframes fadeOut {
+          from {
+            opacity: 1;
+            transform: translateX(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateX(100px);
           }
         }
         

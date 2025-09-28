@@ -3,11 +3,8 @@ import axios from 'axios';
 // MongoDB-based database service for handling API calls
 class DatabaseService {
   constructor() {
-    // Use the correct base URL for your Vercel deployment
-    this.baseURL = process.env.REACT_APP_API_URL || 
-                   (process.env.NODE_ENV === 'production' 
-                     ? 'https://budget-planner-ochre.vercel.app/api' 
-                     : 'http://localhost:5000/api');
+    // Use the Vercel deployment API for all environments
+    this.baseURL = process.env.REACT_APP_API_URL || 'https://budget-planner-ochre.vercel.app/api';
     this.token = localStorage.getItem('authToken');
     
     this.api = axios.create({
